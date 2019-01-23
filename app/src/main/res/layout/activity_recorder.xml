@@ -37,6 +37,21 @@
         android:layout_below="@id/top_banner"
         android:orientation="horizontal">
 
+        <TextView
+            android:id="@+id/user_name_sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="@drawable/username_background"
+            android:fontFamily="@font/milkshake"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
         <ImageView
             android:id="@+id/cassette_tape"
             android:layout_width="250dp"

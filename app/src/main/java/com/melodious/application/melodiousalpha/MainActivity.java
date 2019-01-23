@@ -1,14 +1,13 @@
 package com.melodious.application.melodiousalpha;
 
-import android.media.MediaPlayer;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
+
+import com.melodious.application.melodiousalpha.Fragments.BestFragment;
+import com.melodious.application.melodiousalpha.Fragments.ExclusiveFragment;
+import com.melodious.application.melodiousalpha.Fragments.NewFragment;
 
 public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;

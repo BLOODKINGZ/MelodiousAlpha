@@ -1,4 +1,4 @@
-package com.melodious.application.melodiousalpha;
+package com.melodious.application.melodiousalpha.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.melodious.application.melodiousalpha.MelodyAdapter;
+import com.melodious.application.melodiousalpha.R;
 
 public class NewFragment extends Fragment {
     RecyclerView newRecyclerView;

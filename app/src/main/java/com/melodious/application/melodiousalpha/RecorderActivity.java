@@ -11,6 +11,9 @@ import android.os.Environment;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,22 +32,27 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.melodious.application.melodiousalpha.Fragments.ProfileFragment;
 import com.melodious.application.melodiousalpha.Models.Melody;
+import com.melodious.application.melodiousalpha.Models.User;
 import com.melodious.application.melodiousalpha.Utilites.Utils;
 
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
-public class RecorderActivity extends AppCompatActivity {
+public class RecorderActivity extends FragmentActivity{
 
     private ImageView record, stop_recording, play, stop_playing, playlist, cassette;
-    private TextView status, fileName, createdOn;
+    private TextView status, fileName, createdOn, usernameSignOut;
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
     private String outputFile;
@@ -53,17 +61,30 @@ public class RecorderActivity extends AppCompatActivity {
     private LinearLayout infoTab;
     private Button shareButton;
 
+    //save data for profile dialog
+    private String username, location, about;
+
+    //authentication and servers
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private StorageReference storage;
-    private DatabaseReference metadataDatabase;
+    private DatabaseReference metadataDatabase, usersDatabase;
     private UploadTask uploadTask;
-    private String uploadUrl;
 
     static boolean recordingMelody = false;
     static boolean playingMelody = false;
 
     private static final int REQUEST_PERMISSION_CODE = 1000;
+
+    @Override
+    protected void onStart() {
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            Intent intent = new Intent(RecorderActivity.this, LoginActivity.class);
+            finish();
+            startActivity(intent);
+        }
+        super.onStart();
+    }
 
     @Override
     public void onBackPressed() {
@@ -97,6 +118,7 @@ public class RecorderActivity extends AppCompatActivity {
         status = (TextView) findViewById(R.id.status);
         fileName = (TextView) findViewById(R.id.filename);
         createdOn = (TextView) findViewById(R.id.current_date);
+        usernameSignOut = findViewById(R.id.user_name_sign_out);
 
         infoTab = findViewById(R.id.info_tab);
         shareButton = findViewById(R.id.share_button);
@@ -106,6 +128,7 @@ public class RecorderActivity extends AppCompatActivity {
 
         storage = FirebaseStorage.getInstance().getReference().child("melodies");
         metadataDatabase = FirebaseDatabase.getInstance().getReference("metadata");
+        usersDatabase = FirebaseDatabase.getInstance().getReference("users/" + firebaseUser.getUid());
 
         stop_recording.setEnabled(false);
         stop_recording.setAlpha((float) .4);
@@ -116,6 +139,26 @@ public class RecorderActivity extends AppCompatActivity {
         //shareButton.setEnabled(false);
 
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        usersDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.v("RegisterLog", dataSnapshot.toString());
+                User user = dataSnapshot.getValue(User.class);
+
+                //for passing on into profile dialog to save internet usage
+                username = user.getName();
+                location = user.getLocation();
+                about = user.getAbout();
+
+                usernameSignOut.setText(username);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         record.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -312,7 +355,8 @@ public class RecorderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        
+
+        //this shareButton gets pressed automatically. Will have an update in future
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -366,6 +410,26 @@ public class RecorderActivity extends AppCompatActivity {
             }
         });
 
+        //profile options
+        usernameSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileFragment profileFragment = new ProfileFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+                bundle.putString("location", location);
+                bundle.putString("about", about);
+
+                profileFragment.setArguments(bundle); //passing data onto dialog
+
+                profileFragment.show(getSupportFragmentManager(), "Profile Fragment");
+
+                onStart();
+                //usernameSignOut.performClick(); //force intent to refresh
+            }
+        });
+
     }
 
     private void setupMediaRecorder() {
@@ -404,6 +468,10 @@ public class RecorderActivity extends AppCompatActivity {
             break;
         }
 
+    }
+
+    private void refreshActivity(){
+        onStart();
     }
 
 }

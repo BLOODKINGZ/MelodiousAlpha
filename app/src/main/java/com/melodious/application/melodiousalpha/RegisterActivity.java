@@ -175,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
             //findViewById(R.id.register_button).setVisibility(View.GONE);
             //findViewById(R.id.register_email).setVisibility(View.GONE);
 
-            Intent intent = new Intent(RegisterActivity.this, RecorderActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, GetProfileActivity.class);
             finish();
             startActivity(intent);
 
