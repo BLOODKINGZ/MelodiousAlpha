@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Melodious Alpha</string>
+    <string name="app_name_true">Melodious</string>
+    <string name="new_upload_demo_text">New Uploads</string>
+    <string name="best_uploads_demo_text">Best Uploads</string>
+    <string name="exclusive_uploads_demo_text">Exclusive Uploads</string>
+    <string name="contentDescription">It is a recorder image</string>
+    <string name="record">Record</string>
+    <string name="stop_record">Stop Record</string>
+    <string name="play">Play</string>
+    <string name="stop_play">Stop Playing</string>
+    <string name="status_recording">Recording...</string>
+    <string name="recordings_list">Recordings List</string>
+
+    <string name="emailpassword_status_fmt">Email User: %1$s (verified: %2$b)</string>
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="auth_failed">Authentication Failed!</string>
+    <string name="no_internet">Sorry! No internet available!</string>
+</resources>

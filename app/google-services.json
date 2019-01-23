@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "237657890638",
+    "firebase_url": "https://melodious-alpha.firebaseio.com",
+    "project_id": "melodious-alpha",
+    "storage_bucket": "melodious-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:237657890638:android:4e1ebee3d3f5f661",
+        "android_client_info": {
+          "package_name": "com.melodious.application.melodiousalpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "237657890638-dkguhff6uuf83e1u8rc15v3l2rv55pe6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.melodious.application.melodiousalpha",
+            "certificate_hash": "d042df7246b8fca0439e0f1ad4182990d4d5ca98"
+          }
+        },
+        {
+          "client_id": "237657890638-81qsm4tkc65aat0tevvrn3b44aqrhg43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdTSM2KNgrtJ6B3ylxKEdMZr-1FUEVzFw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "237657890638-81qsm4tkc65aat0tevvrn3b44aqrhg43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
